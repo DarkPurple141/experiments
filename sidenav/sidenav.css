@@ -1,0 +1,52 @@
+.main {
+   padding: 30px;
+   overflow-x: hidden;
+}
+
+ul {
+   list-style-type: none;
+   line-height: 1.5em;
+}
+
+li {
+   margin-top: 0.5em;
+}
+
+nav p {
+   cursor: pointer;
+   color: #7f8c8d;
+}
+
+nav p:hover {
+   text-decoration: underline;
+}
+
+nav {
+  width: 150px;
+  position: fixed;
+  left: 0;
+  top: 30px;
+  border-right: 1px solid rgba(0,0,0,.07);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+html {
+   height: 100%;
+}
+
+body {
+   margin: 0px;
+   font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+   font-size: 15px;
+}
+
+.content {
+  /* top right bot left */
+  padding: 0px 30px 0px 30px;
+}
+
+.content-container {
+  position: absolute;
+  margin-left: 150px;
+}

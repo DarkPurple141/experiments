@@ -1,0 +1,45 @@
+/* main document styles */
+
+body {
+   margin: 0;
+   padding: 1em;
+   font-size: 15px;
+   color: #333;
+   font-family: 'Roboto Mono', monospace;
+}
+
+img {
+   image-orientation: from-image;
+}
+
+main {
+   margin: auto;
+   width: 40em;
+   /*border: 1px solid grey;*/
+   padding: 1em;
+}
+
+h1 {
+   text-align: center;
+}
+
+p {
+   font-size: 1.1em;
+}
+
+article img {
+   margin: 10%;
+   width: 80%;
+}
+
+@media screen and (max-width: 666px) {
+   body {
+      font-size: 13px;
+      padding: 1.5em;
+   }
+
+   main {
+      min-width: 24em;
+      width: 80%;
+   }
+}
