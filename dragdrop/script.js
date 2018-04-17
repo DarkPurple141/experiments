@@ -1,55 +1,52 @@
 "use strict";
 
-let dragging = null
+let held = []
+let selected = []
 
-function toggleHide(el) {
-   el.classList.toggle('hide')
-}
+document.addEventListener("mousedown", beginDrag)
+document.addEventListener("mouseup", endDrag)
+document.addEventListener("mousemove", updateDrag)
 
 function beginDrag(e) {
-   console.log(e)
-   toggleHide(e.target)
-   dragging = simpleBox(e.target.children[0].innerHTML, true)
-   dragging.style.top = e.screenY
-   dragging.style.left = e.screenX
-   document.getElementById('content')
-      .appendChild(dragging)
+  if (e.target.className != "box") return
+  e.target.classList.add("hide")
+  let n = e.target.children[0].innerHTML
+  let clone = Box(n,true)
+  document.getElementById("content").appendChild(clone)
+  held.push(clone)
+  selected.push(e.target)
+  updateDrag(e)
 }
 
 function endDrag(e) {
-   console.log('end drop')
-   document.getElementById('content')
-      .removeChild(dragging)
-   dragging = null
+  if (held.length <= 0) return
+
+  let elm = held.pop()
+  let dad = elm.parentNode
+  dad.removeChild(elm)
+
+  let srcElm = selected.pop()
+  srcElm.classList.remove("hide")
 }
 
-function Box(number) {
-   const box = simpleBox(number)
-
-   box.addEventListener("mousedown", beginDrag)
-   box.addEventListener("mouseup", endDrag)
-
-   return box
+function updateDrag(e) {
+  if (held.length <= 0) return
+  held[0].style.left = (e.clientX-(held[0].clientWidth/2))+"px";
+  held[0].style.top = (e.clientY-(held[0].clientHeight/2))+"px";
 }
-
-function simpleBox(number, clone=false) {
-
+function Box(number, clone=false) {
    const div = document.createElement('div')
    if (clone) {
       div.className = "box clone"
    } else {
       div.className = "box"
    }
-
    const p = document.createElement('p')
-
    p.setAttribute('selectable', 'false')
    p.innerHTML = number
    div.appendChild(p)
-
    return div
 }
-
 
 window.onload = function() {
    const main = document.getElementById('content')
