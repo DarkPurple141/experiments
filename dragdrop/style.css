@@ -1,0 +1,39 @@
+body {
+   font-family: 'San Francisco', sans-serif;
+   font-size: large;
+}
+
+
+#content {
+   display: flex;
+   align-items: space-around;
+   justify-content: space-around;
+   flex-flow: row wrap;
+}
+
+.box {
+   width: 150px;
+   height: 150px;
+   display: flex;
+   margin: 10px 0px;
+   align-items: center;
+   justify-content: center;
+   transition: background 0.5s;
+   background-color: #ebebeb;
+}
+
+.held {
+   background-color: #bebebe;
+}
+
+.target {
+   background-color: #4bbf73;
+}
+
+.hide {
+   /*opacity: 0;*/
+}
+
+.box:hover {
+   background-color: gold;
+}
