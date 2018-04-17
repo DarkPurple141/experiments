@@ -5,6 +5,7 @@ body {
 
 
 #content {
+   position: relative;
    display: flex;
    align-items: space-around;
    justify-content: space-around;
@@ -15,11 +16,21 @@ body {
    width: 150px;
    height: 150px;
    display: flex;
-   margin: 10px 0px;
+   margin: 10px 5px;
    align-items: center;
    justify-content: center;
    transition: background 0.5s;
    background-color: #ebebeb;
+}
+
+.clone {
+   position: absolute;
+   background-color: gold;
+}
+
+.box p {
+   user-select: none;
+   cursor: default;
 }
 
 .held {
@@ -31,7 +42,7 @@ body {
 }
 
 .hide {
-   /*opacity: 0;*/
+   opacity: 0;
 }
 
 .box:hover {

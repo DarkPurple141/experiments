@@ -1,39 +1,49 @@
+"use strict";
 
+let dragging = null
 
-function startHold(event) {
-   console.log("drag start")
-   event.target.classList.add('hide')
+function toggleHide(el) {
+   el.classList.toggle('hide')
 }
 
-function endHold(event) {
-   console.log('drag end')
-   event.target.classList.remove('hide')
+function beginDrag(e) {
+   console.log(e)
+   toggleHide(e.target)
+   dragging = simpleBox(e.target.children[0].innerHTML, true)
+   dragging.style.top = e.screenY
+   dragging.style.left = e.screenX
+   document.getElementById('content')
+      .appendChild(dragging)
 }
 
-function dragOver(event) {
-   event.target.classList.add('target')
+function endDrag(e) {
+   console.log('end drop')
+   document.getElementById('content')
+      .removeChild(dragging)
+   dragging = null
 }
 
-function dragLeave(event) {
-   event.target.classList.remove('target')
+function Box(number) {
+   const box = simpleBox(number)
+
+   box.addEventListener("mousedown", beginDrag)
+   box.addEventListener("mouseup", endDrag)
+
+   return box
 }
 
-function dragDrop(event) {
-   //dragSrcEl.innerHTML = this.innerHTML;
-   //this.innerHTML = e.dataTransfer.getData('text/html');
-}
+function simpleBox(number, clone=false) {
 
-function makeBox(number) {
    const div = document.createElement('div')
-
-   div.className = "box"
-   div.setAttribute('draggable', 'true')
-   div.addEventListener('dragstart', startHold)
-   div.addEventListener('dragend', endHold)
-   div.addEventListener('dragover', dragOver)
-   div.addEventListener('dragleave', dragLeave)
+   if (clone) {
+      div.className = "box clone"
+   } else {
+      div.className = "box"
+   }
 
    const p = document.createElement('p')
+
+   p.setAttribute('selectable', 'false')
    p.innerHTML = number
    div.appendChild(p)
 
@@ -44,6 +54,6 @@ function makeBox(number) {
 window.onload = function() {
    const main = document.getElementById('content')
    for (let i = 0; i < 50; i++) {
-      main.appendChild(makeBox(i))
+      main.appendChild(Box(i))
    }
 }
