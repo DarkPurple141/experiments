@@ -1,0 +1,33 @@
+* {
+   margin: 0;
+   padding: 0;
+}
+
+
+body {
+   font-family: 'San Francisco', sans-serif;
+   font-size: large;
+}
+
+#content {
+   margin: 50px auto;
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: space-around;
+   flex-flow: column wrap;
+}
+
+.article {
+   margin: auto;
+   width: 60%;
+}
+
+.article-header {
+   font-weight: 400;
+   font-size: 2em;
+}
+
+.article-content {
+   line-height: 2;
+}

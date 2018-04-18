@@ -1,59 +1,74 @@
 "use strict";
 
-let dragging = null
+class App {
+   static init() {
+      const main = document.getElementById('content')
+      //const box  =
 
-function toggleHide(el) {
-   el.classList.toggle('hide')
+      for (let i = 0; i < 25; i++) {
+         main.appendChild(Container(i))
+      }
+
+      main.children[10].setAttribute('draggable', 'true')
+   }
+
+   static dragstart() {
+    this.className += " held"
+
+    setTimeout(() => {
+      this.className = "invisible"
+     }, 0)
+  }
+
+  static dragend() {
+    this.className = "box"
+  }
+
+  static dragover(e) {
+    e.preventDefault()
+  }
+
+  static dragenter(e) {
+    e.preventDefault()
+    this.className += " hovered"
+  }
+
+  static dragleave() {
+    this.className = "holder"
+  }
+
+  static drop() {
+    this.className = "holder"
+    this.append(App.box)
+  }
+
 }
 
-function beginDrag(e) {
-   console.log(e)
-   toggleHide(e.target)
-   dragging = simpleBox(e.target.children[0].innerHTML, true)
-   dragging.style.top = e.screenY
-   dragging.style.left = e.screenX
-   document.getElementById('content')
-      .appendChild(dragging)
-}
-
-function endDrag(e) {
-   console.log('end drop')
-   document.getElementById('content')
-      .removeChild(dragging)
-   dragging = null
-}
-
-function Box(number) {
-   const box = simpleBox(number)
-
-   box.addEventListener("mousedown", beginDrag)
-   box.addEventListener("mouseup", endDrag)
-
+function Container(number) {
+   const box = Box(number)
+   box.addEventListener("dragover", App.dragover)
+   box.addEventListener("dragenter", App.dragenter)
+   box.addEventListener("dragleave", App.dragleave)
+   box.addEventListener("drop", App.drop)
    return box
 }
 
-function simpleBox(number, clone=false) {
+function Box(number) {
 
    const div = document.createElement('div')
-   if (clone) {
-      div.className = "box clone"
-   } else {
-      div.className = "box"
-   }
+   const box = document.createElement('div')
+
+   div.className = "box"
+   box.className = "hide"
 
    const p = document.createElement('p')
 
    p.setAttribute('selectable', 'false')
    p.innerHTML = number
-   div.appendChild(p)
+   box.appendChild(p)
+   div.appendChild(box)
 
    return div
 }
 
-
-window.onload = function() {
-   const main = document.getElementById('content')
-   for (let i = 0; i < 50; i++) {
-      main.appendChild(Box(i))
-   }
-}
+document.addEventListener('DOMContentLoaded', App.init)

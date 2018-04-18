@@ -3,11 +3,10 @@ body {
    font-size: large;
 }
 
-
 #content {
    position: relative;
    display: flex;
-   align-items: space-around;
+   align-items: center;
    justify-content: space-around;
    flex-flow: row wrap;
 }
@@ -23,10 +22,6 @@ body {
    background-color: #ebebeb;
 }
 
-.clone {
-   position: absolute;
-   background-color: gold;
-}
 
 .box p {
    user-select: none;
@@ -37,7 +32,7 @@ body {
    background-color: #bebebe;
 }
 
-.target {
+.hovered {
    background-color: #4bbf73;
 }
 

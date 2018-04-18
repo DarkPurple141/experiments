@@ -1,0 +1,36 @@
+* {
+   margin: 0;
+   padding: 0;
+}
+
+
+body {
+   font-family: 'San Francisco', sans-serif;
+   font-size: large;
+}
+
+#content {
+   margin: 50px auto;
+   position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: space-around;
+   flex-flow: row wrap;
+}
+
+.highlight {
+   background-color: #bbb;
+}
+
+#content .list-component {
+   width: 50%;
+}
+
+li:hover {
+   background-color: #ddd;
+}
+
+li {
+   padding: 10px 0px;
+   list-style-type: none;
+}
