@@ -81,7 +81,7 @@ function View(root) {
 
    this.render = function(vDOM) {
       for (let child in vDOM) {
-         update(this.root, this.root.childNodes[child], vDOM[child])
+         updateDOM(this.root, this.root.childNodes[child], vDOM[child])
       }
    }
 }
