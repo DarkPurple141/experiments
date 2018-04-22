@@ -36,6 +36,9 @@ function equals($node, vnode) {
 // Update the DOM
 function updateDOM($parent, node, vnode) {
    // node doesn't exit
+   if (!node && !vnode)
+      return
+
    if (!node) {
       $parent.appendChild(createElement(vnode))
    // vnode doesn't exist (ie real node needs to be deleted)
@@ -43,10 +46,10 @@ function updateDOM($parent, node, vnode) {
       $parent.removeChild(node)
    // else nodes aren't equal
    } else if (!equals(node, vnode)) {
+      console.log(node, vnode)
       $parent.replaceChild(createElement(vnode), node)
    // else nodes are equal
    } else {
-
       // update children if needed
       for (let i in vnode.children) {
          updateDOM(node, node.childNodes[i], vnode.children[i])
