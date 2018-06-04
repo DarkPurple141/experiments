@@ -1,0 +1,8 @@
+language: node_js
+
+install:
+  - cd perf_js
+  - npm i
+
+test:
+  - npm test
