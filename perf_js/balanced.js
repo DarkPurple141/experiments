@@ -1,4 +1,3 @@
-const assert = require('assert');
 
 function isLeftBracket(char) {
    return char == '(' || char == '{' || char == '['
@@ -19,7 +18,7 @@ function matching(char, other) {
    return false
 }
 
-function isBalanced(str) {
+module.exports = function isBalanced(str) {
    let stack = []
    for (let char of str) {
       if (isLeftBracket(char))
@@ -34,12 +33,3 @@ function isBalanced(str) {
 
    return stack.length == 0
 }
-
-
-assert(isBalanced('}{')                      ==  false)
-assert(isBalanced('{{}')                     ==  false)
-assert(isBalanced('{}{}')                    ==  true)
-assert(isBalanced('foo { bar { baz } boo }') ==  true)
-assert(isBalanced('foo { bar { baz }')       ==  false)
-assert(isBalanced('foo { bar } }')           ==  false)
-console.log("ALL TESTS PASSSEDDDDD!")

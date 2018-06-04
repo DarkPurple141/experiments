@@ -1,5 +1,5 @@
 
-Array.prototype.filter = function (callback, thisArg) {
+module.exports = function filter(callback, thisArg) {
    let filtered = []
    let array = thisArg || this
    for (let index = 0; index < array.length; index++) {
@@ -9,6 +9,3 @@ Array.prototype.filter = function (callback, thisArg) {
    }
    return filtered
 }
-
-console.log([1,2,3].filter((item) => item < 2 ))
-console.log([1,2,3].filter((item) => item > 2 ))

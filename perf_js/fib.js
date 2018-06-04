@@ -1,6 +1,5 @@
-const assert = require('assert');
 
-function fibonacci(n) {
+module.exports = function fibonacci(n) {
    let mem = [0, 1, 1]
    return (function fib(n) {
       if (mem[n])
@@ -11,8 +10,3 @@ function fibonacci(n) {
       }
    })(n)
 }
-
-assert(fibonacci(10) == 55)
-assert(fibonacci(20) == 6765)
-assert(fibonacci(50) == 12586269025)
-console.log("Tests passed.")

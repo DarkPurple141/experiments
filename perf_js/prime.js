@@ -18,7 +18,7 @@ function isPrime(num) {
 }
 
 function findPrimes(n) {
-   primes = []
+   const primes = []
    for (let i = 0; i < n; i++) {
       if (isPrime(i))
          primes[i] = i
@@ -28,9 +28,4 @@ function findPrimes(n) {
    return primes.filter(item => item)
 }
 
-
-console.log(isPrime(1000))
-console.log(isPrime(1001))
-console.log(isPrime(1005))
-console.log(isPrime(2))
-console.log(findPrimes(500))
+module.exports = isPrime
