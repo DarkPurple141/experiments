@@ -2,7 +2,6 @@
   "name": "perf_js",
   "version": "1.0.0",
   "description": "Just some tests and mini-scripts from perfjs",
-  "main": "assignd.js",
   "dependencies": {},
   "devDependencies": {
     "mocha": "^5.2.0"
