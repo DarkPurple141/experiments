@@ -1,0 +1,61 @@
+
+* {
+   margin: 0;
+   padding: 0;
+}
+
+.pane {
+   min-width: 50%;
+}
+
+.pane:first-child {
+   border-right: 1px solid #aaa;
+}
+
+.pane:last-child {
+   background-color: black;
+   color: #efefef;
+}
+
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}
+
+/* the code section */
+pre {
+   font-family: monospace;
+   background-color: #fff;
+   width: 100%;
+   border-radius: .25em;
+   line-height: 0;
+   counter-reset: line;
+}
+
+/* This is the code line */
+.line {
+   cursor: text;
+   display: block;
+   line-height: 1.5rem;
+   margin-left: 1em;
+}
+
+/* This is the actual line num */
+pre span:before {
+   counter-increment: line;
+   content: counter(line);
+   display: inline-block;
+   border-right: 1px solid #ddd;
+   padding: 0 .5em;
+   margin-right: .5em;
+   margin-left: 0;
+   color: #888;
+}
+
+main {
+   padding-top: 10vh;
+   background-color: #ccc;
+   height: 90vh;
+   width: 100%;
+   display: flex;
+   flex-direction: row;
+}
