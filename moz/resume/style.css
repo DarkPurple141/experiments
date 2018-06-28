@@ -58,7 +58,7 @@ main {
 }
 
 .column {
-   width: 60%;
+   width: 63%;
 }
 
 .left-column {
@@ -69,7 +69,7 @@ main {
 
 .column:first-of-type {
    background-color: #eaeafa;/*#d99;*/
-   width: 39%;
+   width: 37%;
 }
 
 header {
