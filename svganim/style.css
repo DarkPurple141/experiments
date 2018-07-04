@@ -1,0 +1,17 @@
+
+* {
+   margin: 0;
+   padding: 0;
+}
+
+html {
+   font-family: 'Futura', sans-serif;
+}
+
+#content {
+   height: 100vh;
+}
+
+svg {
+   background-color: #eee;
+}
