@@ -28,7 +28,7 @@ function makeCircleElement(x, y, vx, vy) {
    console.log('circle')
    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
 
-   const mass = randomInt(0, 10)
+   const mass = randomInt(1, 10)
 
    circle.setAttribute('cx', x || randomInt(0, DIMENSIONS.width))
    circle.setAttribute('cy', y || randomInt(0, DIMENSIONS.height))
@@ -58,6 +58,7 @@ function setDimensions() {
 
 function init () {
    const c = document.getElementById('content')
+   const text = document.getElementById('stats')
 
    setDimensions()
 
@@ -98,7 +99,7 @@ function init () {
          const dist  = 0.5 * distance(p1, p2)
          const angle = getAngle(p1, p2)
          const circle = makeCircleElement(
-            startx, starty, dist * Math.cos(angle), dist * Math.sin(angle)
+            startx, starty, dist * Math.cos(angle) * 0.5, dist * Math.sin(angle) * 0.5
          )
          parent.appendChild(circle)
          circles.push(circle)
@@ -125,7 +126,7 @@ function init () {
 
       const s = new Set()
 
-      for (el of circles) {
+      for (const el of circles) {
 
          if (s.has(el)) continue
 
@@ -133,12 +134,12 @@ function init () {
          let y = el.attributes['cy'].nodeValue
 
          // reset velocity and work out acceleration
-         // el.data.vx = el.data.vx
-         // el.data.vy = el.data.vy
+         // el.data.vx =  el.data.vx * 0.999
+         // el.data.vy =  el.data.vy * 0.999
 
          let p1 = extractPoint(el)
 
-         for (alt of circles) {
+         for (const alt of circles) {
             if (alt === el) continue
             let p2 = extractPoint(alt)
             let { vx, vy } = getGravity(
@@ -149,8 +150,8 @@ function init () {
             if (distance(p1, p2) < el.data.mass) {
                el.data.mass += alt.data.mass
                el.attributes['r'].nodeValue = el.data.mass
-               el.data.vx += alt.data.vx
-               el.data.vy += alt.data.vy
+               el.data.vx *= 0.5
+               el.data.vy *= 0.5
 
                s.add(alt)
                removeCircle(alt)
@@ -160,26 +161,32 @@ function init () {
                el.data.vy += vy
             }
          }
-
+         /*
          if (offScreen(Number(x), Number(y))) {
             removeCircle(el)
          }
+         */
 
       }
 
       // do this after working out vel
-      for (el of circles) {
+      for (const el of circles) {
+
          let x = el.attributes['cx'].nodeValue
          let y = el.attributes['cy'].nodeValue
 
          el.attributes['cx'].nodeValue = +x+el.data.vx
          el.attributes['cy'].nodeValue = +y+el.data.vy
       }
+
+      // update text
+      text.innerHTML = circles.length
+
    }
 
    c.appendChild(svg)
 
-   const id = setInterval(animate, 30)
+   const id = setInterval(animate, 25)
 
 }
 

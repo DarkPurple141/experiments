@@ -8,6 +8,30 @@ html {
    font-family: 'Futura', sans-serif;
 }
 
+main {
+   position: relative;
+}
+
+.help {
+   left: 0;
+   top: 0;
+}
+
+.text {
+   user-select: none;
+   position: absolute;
+   padding: 10px;
+   color: rgba(0,0,0, 0.65);
+   transition: width 0.4s ease-in-out;
+}
+
+.stats {
+   right: 0;
+   top: 0;
+}
+
+
+
 #content {
    height: 100vh;
 }

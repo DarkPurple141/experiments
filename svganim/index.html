@@ -6,8 +6,17 @@
       <link rel="stylesheet" href="style.css"/>
    </head>
    <body>
-      <main id="content"></main>
+      <main id="content">
+         <aside class="text help">
+            <h2>Gravity Simulation</h2>
+            <p>Click the window to create new circles.</p>
+            <p>Click and drag to give a circle an initial velocity.</p>
+         </aside>
+         <aside class="text stats">
+            <p>In Orbit:<span id="stats">0</span></p>
+         </aside>
+      </main>
       <script src="geom.js" charset="utf-8"></script>
-      <script src="game.js" charset="utf-8"></script>
+      <script src="engine.js" charset="utf-8"></script>
    </body>
 </html>
