@@ -15,3 +15,8 @@ html {
 svg {
    background-color: #eee;
 }
+
+svg line {
+   stroke: black;
+   stroke-width: 2px;
+}

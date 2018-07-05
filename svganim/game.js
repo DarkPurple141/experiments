@@ -13,19 +13,31 @@ const offScreen = (x, y) =>
    (x < 0 || y < 0 || x > DIMENSIONS.width || y > DIMENSIONS.height)
 
 
-function makeCircleElement() {
+function makeLineElement(x, y) {
+   const line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+
+   line.setAttribute('x2', x)
+   line.setAttribute('x1', x)
+   line.setAttribute('y2', y)
+   line.setAttribute('y1', y)
+
+   return line
+}
+
+function makeCircleElement(x, y, vx, vy) {
+   console.log('circle')
    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
 
    const mass = randomInt(0, 10)
 
-   circle.setAttribute('cx', randomInt(0, DIMENSIONS.width))
-   circle.setAttribute('cy', randomInt(0, DIMENSIONS.height))
+   circle.setAttribute('cx', x || randomInt(0, DIMENSIONS.width))
+   circle.setAttribute('cy', y || randomInt(0, DIMENSIONS.height))
    circle.setAttribute('r', mass)
    circle.setAttribute('fill', randomColor())
 
    circle.data = {
-      vx: 0,
-      vy: 0,
+      vx: vx || 0,
+      vy: vy || 0,
       mass,
    }
 
@@ -51,25 +63,61 @@ function init () {
 
    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
    svg.setAttribute('viewBox', `0 0 ${DIMENSIONS.width} ${DIMENSIONS.height}`)
-   svg.addEventListener('click', addCircleToSVG)
+   svg.addEventListener('click', (evt) => addCircleToSVG(svg, evt))
+   svg.addEventListener('mousedown', (e) => traceLine(svg, e))
 
    let circles = []
 
    for (let i = 0; i < 20; i++) {
-      addCircleToSVG(null, svg)
+      addCircleToSVG(svg)
+   }
+
+   function traceLine(parent, evt) {
+
+      const startx = evt.x
+      const starty = evt.y
+
+      const line   = makeLineElement(startx, starty)
+
+      parent.appendChild(line)
+
+      function mouseMove(e) {
+         line.attributes['x2'].nodeValue = e.x
+         line.attributes['y2'].nodeValue = e.y
+      }
+
+      function mouseUp({ x, y }) {
+         window.removeEventListener('mousemove', mouseMove)
+         window.removeEventListener('mouseup', mouseUp)
+
+         parent.removeChild(line)
+
+         const p1 = { x: startx, y: starty }
+         const p2 = { x, y }
+
+         const dist  = 0.5 * distance(p1, p2)
+         const angle = getAngle(p1, p2)
+         const circle = makeCircleElement(
+            startx, starty, dist * Math.cos(angle), dist * Math.sin(angle)
+         )
+         parent.appendChild(circle)
+         circles.push(circle)
+      }
+
+      window.addEventListener('mousemove', mouseMove)
+      window.addEventListener('mouseup', mouseUp)
+
    }
 
    function removeCircle(circle) {
       svg.removeChild(circle)
-      circles = circles.filter(item => item != circle)
+      const index = circles.indexOf(circle)
+      circles.splice(index, 1)
    }
 
-   function addCircleToSVG(e, svgEl) {
-
-      const target = svgEl ? svgEl : this
-
-      let circle = makeCircleElement()
-      target.appendChild(circle)
+   function addCircleToSVG(svgEl, e) {
+      let circle = e ? makeCircleElement(e.x, e.y) : makeCircleElement()
+      svgEl.appendChild(circle)
       circles.push(circle)
    }
 
@@ -85,8 +133,8 @@ function init () {
          let y = el.attributes['cy'].nodeValue
 
          // reset velocity and work out acceleration
-         el.data.vx = 0.5 * el.data.vx
-         el.data.vy = 0.5 * el.data.vy
+         // el.data.vx = el.data.vx
+         // el.data.vy = el.data.vy
 
          let p1 = extractPoint(el)
 
@@ -129,7 +177,7 @@ function init () {
 
    c.appendChild(svg)
 
-   const id = setInterval(animate, 20)
+   const id = setInterval(animate, 30)
 
 }
 
