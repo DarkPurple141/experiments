@@ -149,6 +149,8 @@ function init () {
             if (distance(p1, p2) < el.data.mass) {
                el.data.mass += alt.data.mass
                el.attributes['r'].nodeValue = el.data.mass
+               el.data.vx += alt.data.vx
+               el.data.vy += alt.data.vy
 
                s.add(alt)
                removeCircle(alt)
