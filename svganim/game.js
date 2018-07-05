@@ -6,7 +6,6 @@ const DIMENSIONS = {
    height: 300
 }
 
-
 const randomHex = () => randomInt(0,255).toString(16)
 const randomInt = (min, max) => Math.floor(Math.random()*(max-min) + min)
 const randomColor = () => '#'+[0,1,2].map(randomHex).join('')
@@ -40,20 +39,38 @@ function extractPoint(circle) {
    return { x, y }
 }
 
+function setDimensions() {
+   DIMENSIONS.width  = window.innerWidth
+   DIMENSIONS.height = window.innerHeight
+}
 
 function init () {
    const c = document.getElementById('content')
 
+   setDimensions()
+
    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
    svg.setAttribute('viewBox', `0 0 ${DIMENSIONS.width} ${DIMENSIONS.height}`)
+   svg.addEventListener('click', addCircleToSVG)
 
    let circles = []
 
    for (let i = 0; i < 20; i++) {
-      let circle = makeCircleElement()
+      addCircleToSVG(null, svg)
+   }
 
+   function removeCircle(circle) {
+      svg.removeChild(circle)
+      circles = circles.filter(item => item != circle)
+   }
+
+   function addCircleToSVG(e, svgEl) {
+
+      const target = svgEl ? svgEl : this
+
+      let circle = makeCircleElement()
+      target.appendChild(circle)
       circles.push(circle)
-      svg.appendChild(circle)
    }
 
    function animate() {
@@ -67,10 +84,9 @@ function init () {
          let x = el.attributes['cx'].nodeValue
          let y = el.attributes['cy'].nodeValue
 
-         
-         el.data.vx = 0
-         el.data.vy = 0
-         
+         // reset velocity and work out acceleration
+         el.data.vx = 0.5 * el.data.vx
+         el.data.vy = 0.5 * el.data.vy
 
          let p1 = extractPoint(el)
 
@@ -85,9 +101,10 @@ function init () {
             if (distance(p1, p2) < el.data.mass) {
                el.data.mass += alt.data.mass
                el.attributes['r'].nodeValue = el.data.mass
+
                s.add(alt)
-               svg.removeChild(alt)
-               circles = circles.filter(item => item != alt)
+               removeCircle(alt)
+
             } else {
                el.data.vx += vx
                el.data.vy += vy
@@ -95,8 +112,7 @@ function init () {
          }
 
          if (offScreen(Number(x), Number(y))) {
-            svg.removeChild(el)
-            circles = circles.filter(item => item != el)
+            removeCircle(el)
          }
 
       }

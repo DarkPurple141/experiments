@@ -11,7 +11,7 @@ const yVector  = (angle, force) => force * Math.sin(angle)
 
 function getGravity(obj1, obj2) {
 
-   const g     = 0.05*gravity(obj1, obj2)
+   const g     = 0.06*gravity(obj1, obj2)
    const theta = angle(obj1.point, obj2.point)
 
    return { vx : xVector(theta, g), vy: yVector(theta, g) }
