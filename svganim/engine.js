@@ -52,8 +52,8 @@ function extractPoint(circle) {
 }
 
 function setDimensions() {
-   DIMENSIONS.width  = window.innerWidth
-   DIMENSIONS.height = window.innerHeight
+   DIMENSIONS.width  = window.innerWidth - 10
+   DIMENSIONS.height = window.innerHeight - 5
 }
 
 function init () {
@@ -65,7 +65,8 @@ function init () {
    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
    svg.setAttribute('viewBox', `0 0 ${DIMENSIONS.width} ${DIMENSIONS.height}`)
    svg.addEventListener('click', (evt) => addCircleToSVG(svg, evt))
-   svg.addEventListener('mousedown', (e) => traceLine(svg, e))
+   svg.addEventListener('mousedown', (evt) => traceLine(svg, evt))
+   svg.addEventListener('touchstart', (evt) => traceLine(svg, evt))
 
    let circles = []
 
@@ -75,21 +76,26 @@ function init () {
 
    function traceLine(parent, evt) {
 
-      const startx = evt.x
-      const starty = evt.y
+      const startx = evt.x || evt.touches[0].clientX
+      const starty = evt.y || evt.touches[0].clientY
 
       const line   = makeLineElement(startx, starty)
 
       parent.appendChild(line)
 
       function mouseMove(e) {
-         line.attributes['x2'].nodeValue = e.x
-         line.attributes['y2'].nodeValue = e.y
+         line.attributes['x2'].nodeValue = e.x || e.changedTouches[0].clientX
+         line.attributes['y2'].nodeValue = e.y || e.changedTouches[0].clientY
       }
 
-      function mouseUp({ x, y }) {
+      function mouseUp(e) {
          window.removeEventListener('mousemove', mouseMove)
          window.removeEventListener('mouseup', mouseUp)
+         window.removeEventListener('touchend', mouseUp)
+         window.removeEventListener('touchmove', mouseMove)
+
+         const x = e.x || e.changedTouches[0].clientX
+         const y = e.y || e.changedTouches[0].clientY
 
          parent.removeChild(line)
 
@@ -107,6 +113,8 @@ function init () {
 
       window.addEventListener('mousemove', mouseMove)
       window.addEventListener('mouseup', mouseUp)
+      window.addEventListener('touchmove', mouseMove)
+      window.addEventListener('touchend', mouseUp)
 
    }
 

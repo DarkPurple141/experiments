@@ -9,6 +9,7 @@ html {
 }
 
 main {
+   overflow-y: hidden;
    position: relative;
 }
 
@@ -26,15 +27,15 @@ main {
 }
 
 .stats {
-   right: 0;
-   top: 0;
+   left: 0;
+   bottom: 0;
 }
-
 
 
 #content {
-   height: 100vh;
+   max-height: 100vh;
 }
+
 
 svg {
    background-color: #eee;
