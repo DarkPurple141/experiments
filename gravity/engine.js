@@ -68,7 +68,7 @@ function init () {
    svg.addEventListener('mousedown', (evt) => traceLine(svg, evt))
    svg.addEventListener('touchstart', (evt) => traceLine(svg, evt))
 
-   let circles = []
+   const circles = []
 
    for (let i = 0; i < 20; i++) {
       addCircleToSVG(svg)
@@ -194,7 +194,7 @@ function init () {
 
    c.appendChild(svg)
 
-   const id = setInterval(animate, 25)
+   const id = setInterval(animate, 1000)
 
 }
 
