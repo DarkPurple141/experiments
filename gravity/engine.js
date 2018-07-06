@@ -52,8 +52,8 @@ function extractPoint(circle) {
 }
 
 function setDimensions() {
-   DIMENSIONS.width  = window.innerWidth - 10
-   DIMENSIONS.height = window.innerHeight - 5
+   DIMENSIONS.width  = window.innerWidth
+   DIMENSIONS.height = window.innerHeight
 }
 
 function init () {
@@ -194,7 +194,7 @@ function init () {
 
    c.appendChild(svg)
 
-   const id = setInterval(animate, 1000)
+   const id = setInterval(animate, 25)
 
 }
 
