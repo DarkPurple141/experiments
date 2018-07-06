@@ -36,8 +36,8 @@ function makeCircleElement(x, y, vx, vy) {
    circle.setAttribute('fill', randomColor())
 
    circle.data = {
-      vx: vx || randomInt(-1, 1),
-      vy: vy || randomInt(-1, 1),
+      vx: vx || 0,
+      vy: vy || 0,
       mass,
    }
 
@@ -70,7 +70,7 @@ function init () {
 
    const circles = []
 
-   for (let i = 0; i < 20; i++) {
+   for (let i = 0; i < 15; i++) {
       addCircleToSVG(svg)
    }
 
