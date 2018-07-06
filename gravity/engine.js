@@ -28,7 +28,7 @@ function makeCircleElement(x, y, vx, vy) {
    console.log('circle')
    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
 
-   const mass = randomInt(1, 10)
+   const mass = randomInt(1, 12)
 
    circle.setAttribute('cx', x || randomInt(0, DIMENSIONS.width))
    circle.setAttribute('cy', y || randomInt(0, DIMENSIONS.height))
@@ -36,8 +36,8 @@ function makeCircleElement(x, y, vx, vy) {
    circle.setAttribute('fill', randomColor())
 
    circle.data = {
-      vx: vx || 0,
-      vy: vy || 0,
+      vx: vx || randomInt(-1, 1),
+      vy: vy || randomInt(-1, 1),
       mass,
    }
 
@@ -140,14 +140,14 @@ function init () {
 
          if (s.has(el)) continue
 
-         let x = el.attributes['cx'].nodeValue
-         let y = el.attributes['cy'].nodeValue
+         const x = el.attributes['cx'].nodeValue
+         const y = el.attributes['cy'].nodeValue
 
          // reset velocity and work out acceleration
          // el.data.vx =  el.data.vx * 0.999
          // el.data.vy =  el.data.vy * 0.999
 
-         let p1 = extractPoint(el)
+         const p1 = extractPoint(el)
 
          for (const alt of circles) {
             if (alt === el) continue
@@ -158,10 +158,14 @@ function init () {
             )
 
             if (distance(p1, p2) < el.data.mass) {
-               el.data.mass += alt.data.mass
                el.attributes['r'].nodeValue = el.data.mass
-               el.data.vx += 0.5 * alt.data.vx / alt.data.mass
-               el.data.vy += 0.5 * alt.data.vy / alt.data.mass
+
+               const massRatio = (el.data.mass / alt.data.mass)
+
+               el.data.vx += 0.5 * alt.data.vx / massRatio
+               el.data.vy += 0.5 * alt.data.vy / massRatio
+
+               el.data.mass += alt.data.mass
 
                s.add(alt)
                removeCircle(alt)
@@ -196,7 +200,8 @@ function init () {
 
    c.appendChild(svg)
 
-   const id = setInterval(animate, 25)
+   window.addEventListener('resize', setDimensions)
+   const id = setInterval(animate, 20)
 
 }
 
