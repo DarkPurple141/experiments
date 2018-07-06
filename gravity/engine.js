@@ -24,11 +24,30 @@ function makeLineElement(x, y) {
    return line
 }
 
-function makeCircleElement(x, y, vx, vy) {
-   console.log('circle')
+function addGravityProperties(obj) {
+
+   obj = obj || {}
+
+   obj.data = {
+      get point() {
+         return {
+            x: Math.floor(window.innerWidth/2),
+            y: Math.floor(window.innerHeight/2)
+         }
+      },
+      get mass() {
+         return 15
+      }
+   }
+
+   return obj
+}
+
+function makeCircleElement(x, y, vx, vy, m) {
+
    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
 
-   const mass = randomInt(1, 12)
+   const mass = m || randomInt(2, 12)
 
    circle.setAttribute('cx', x || randomInt(0, DIMENSIONS.width))
    circle.setAttribute('cy', y || randomInt(0, DIMENSIONS.height))
@@ -36,8 +55,8 @@ function makeCircleElement(x, y, vx, vy) {
    circle.setAttribute('fill', randomColor())
 
    circle.data = {
-      vx: vx || 0,
-      vy: vy || 0,
+      vx: vx || randomInt(-2,2),
+      vy: vy || randomInt(-2,2),
       mass,
    }
 
@@ -51,24 +70,44 @@ function extractPoint(circle) {
    return { x, y }
 }
 
-function setDimensions() {
+function debounce(fn, wait, args) {
+
+   let timeout = null
+
+   const later = function () {
+      fn(...args)
+   }
+
+   return function() {
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+   }
+}
+
+function setDimensions(svg) {
+   console.log('resize')
    DIMENSIONS.width  = window.innerWidth
    DIMENSIONS.height = window.innerHeight
+
+   svg.setAttribute('viewBox', `0 0 ${DIMENSIONS.width} ${DIMENSIONS.height}`)
 }
 
 function init () {
    const c = document.getElementById('content')
    const text = document.getElementById('stats')
 
-   setDimensions()
-
    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
-   svg.setAttribute('viewBox', `0 0 ${DIMENSIONS.width} ${DIMENSIONS.height}`)
+
+   setDimensions(svg)
+
    svg.addEventListener('click', (evt) => addCircleToSVG(svg, evt))
    svg.addEventListener('mousedown', (evt) => traceLine(svg, evt))
    svg.addEventListener('touchstart', (evt) => traceLine(svg, evt))
 
    const circles = []
+
+   const gravityCentre = {}
+   addGravityProperties(gravityCentre)
 
    for (let i = 0; i < 15; i++) {
       addCircleToSVG(svg)
@@ -106,7 +145,7 @@ function init () {
          const dist  = 0.5 * distance(p1, p2)
          const angle = getAngle(p1, p2)
          const circle = makeCircleElement(
-            startx, starty, dist * Math.cos(angle) * 0.5, dist * Math.sin(angle) * 0.5
+            startx, starty, dist * Math.cos(angle) * 0.4, dist * Math.sin(angle) * 0.4
          )
          parent.appendChild(circle)
          circles.push(circle)
@@ -137,7 +176,6 @@ function init () {
 
       // find gravity for each 'planet'
       for (const el of circles) {
-
          if (s.has(el)) continue
 
          const x = el.attributes['cx'].nodeValue
@@ -152,20 +190,23 @@ function init () {
          for (const alt of circles) {
             if (alt === el) continue
             let p2 = extractPoint(alt)
+
             let { vx, vy } = getGravity(
                { point: p1, mass: el.data.mass },
                { point: p2, mass: alt.data.mass }
             )
 
             if (distance(p1, p2) < el.data.mass) {
-               el.attributes['r'].nodeValue = el.data.mass
 
+               // merge elements
                const massRatio = (el.data.mass / alt.data.mass)
 
                el.data.vx += 0.5 * alt.data.vx / massRatio
                el.data.vy += 0.5 * alt.data.vy / massRatio
 
                el.data.mass += alt.data.mass
+
+               el.attributes['r'].nodeValue = el.data.mass
 
                s.add(alt)
                removeCircle(alt)
@@ -175,6 +216,7 @@ function init () {
                el.data.vy += vy
             }
          }
+
          /*
          if (offScreen(Number(x), Number(y))) {
             removeCircle(el)
@@ -182,7 +224,6 @@ function init () {
          */
 
       }
-
       // do this after working out vel
       for (const el of circles) {
 
@@ -192,7 +233,6 @@ function init () {
          el.attributes['cx'].nodeValue = +x+el.data.vx
          el.attributes['cy'].nodeValue = +y+el.data.vy
       }
-
       // update text
       text.innerHTML = circles.length
 
@@ -200,7 +240,7 @@ function init () {
 
    c.appendChild(svg)
 
-   window.addEventListener('resize', setDimensions)
+   window.addEventListener('resize', debounce(setDimensions, 100, [svg]))
    const id = setInterval(animate, 20)
 
 }
