@@ -75,6 +75,7 @@ function init () {
    }
 
    function traceLine(parent, evt) {
+      evt.preventDefault()
 
       const startx = evt.x || evt.touches[0].clientX
       const starty = evt.y || evt.touches[0].clientY
@@ -134,6 +135,7 @@ function init () {
 
       const s = new Set()
 
+      // find gravity for each 'planet'
       for (const el of circles) {
 
          if (s.has(el)) continue
@@ -158,8 +160,8 @@ function init () {
             if (distance(p1, p2) < el.data.mass) {
                el.data.mass += alt.data.mass
                el.attributes['r'].nodeValue = el.data.mass
-               el.data.vx *= 0.5
-               el.data.vy *= 0.5
+               el.data.vx += 0.5 * alt.data.vx
+               el.data.vy += 0.5 * alt.data.vx
 
                s.add(alt)
                removeCircle(alt)
