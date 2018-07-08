@@ -1,7 +1,7 @@
 
 // export default { }
 
-const GRAV_CONSTANT = 0.055
+const GRAV_CONSTANT = 0.065
 
 // square a number
 const squared  = (val) => Math.pow(val, 2)
@@ -21,7 +21,7 @@ const yVector  = (angle, force) => force * Math.sin(angle)
 
 function getGravity(obj1, obj2) {
 
-   const g     = GRAV_CONSTANT*gravity(obj1, obj2) / obj1.mass
+   const g     = GRAV_CONSTANT * gravity(obj1, obj2) / obj1.mass
    const theta = getAngle(obj1.point, obj2.point)
 
    return { vx : xVector(theta, g), vy: yVector(theta, g) }

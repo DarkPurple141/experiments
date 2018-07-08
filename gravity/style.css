@@ -44,3 +44,7 @@ svg line {
    stroke: black;
    stroke-width: 2px;
 }
+
+svg circle {
+   transition: r 0.4s ease;
+}

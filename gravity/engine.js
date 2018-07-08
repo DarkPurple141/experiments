@@ -6,6 +6,10 @@ const DIMENSIONS = {
    height: 300
 }
 
+const config = {
+   NUM_CIRCLES : 20
+}
+
 const randomHex = () => randomInt(0,255).toString(16)
 const randomInt = (min, max) => Math.floor(Math.random()*(max-min) + min)
 const randomColor = () => '#'+[0,1,2].map(randomHex).join('')
@@ -36,7 +40,7 @@ function addGravityProperties(obj) {
          }
       },
       get mass() {
-         return 15
+         return 500
       }
    }
 
@@ -55,8 +59,8 @@ function makeCircleElement(x, y, vx, vy, m) {
    circle.setAttribute('fill', randomColor())
 
    circle.data = {
-      vx: vx || randomInt(-2,2),
-      vy: vy || randomInt(-2,2),
+      vx: vx || randomInt(-1,1),
+      vy: vy || randomInt(-1,1),
       mass,
    }
 
@@ -106,10 +110,10 @@ function init () {
 
    const circles = []
 
-   const gravityCentre = {}
-   addGravityProperties(gravityCentre)
+   //const gravityCentre = {}
+   //addGravityProperties(gravityCentre)
 
-   for (let i = 0; i < 15; i++) {
+   for (let i = 0; i < config.NUM_CIRCLES; i++) {
       addCircleToSVG(svg)
    }
 
@@ -170,6 +174,31 @@ function init () {
       circles.push(circle)
    }
 
+   function updateElements(list) {
+
+      for (const el of list) {
+
+         const x = el.attributes['cx'].nodeValue
+         const y = el.attributes['cy'].nodeValue
+
+         el.attributes['cx'].nodeValue = +x+el.data.vx
+         el.attributes['cy'].nodeValue = +y+el.data.vy
+      }
+   }
+
+   function mergeElements(el, alt) {
+      const massRatio = (el.data.mass / alt.data.mass)
+
+      el.data.vx = 0.5 * el.data.vx + alt.data.vx / massRatio
+      el.data.vy = 0.5 * el.data.vy + alt.data.vy / massRatio
+
+      el.data.mass += alt.data.mass
+
+      el.attributes['r'].nodeValue = el.data.mass
+
+      removeCircle(alt)
+   }
+
    function animate() {
 
       const s = new Set()
@@ -177,13 +206,6 @@ function init () {
       // find gravity for each 'planet'
       for (const el of circles) {
          if (s.has(el)) continue
-
-         const x = el.attributes['cx'].nodeValue
-         const y = el.attributes['cy'].nodeValue
-
-         // reset velocity and work out acceleration
-         // el.data.vx =  el.data.vx * 0.999
-         // el.data.vy =  el.data.vy * 0.999
 
          const p1 = extractPoint(el)
 
@@ -197,51 +219,28 @@ function init () {
             )
 
             if (distance(p1, p2) < el.data.mass) {
-
                // merge elements
-               const massRatio = (el.data.mass / alt.data.mass)
-
-               el.data.vx += 0.5 * alt.data.vx / massRatio
-               el.data.vy += 0.5 * alt.data.vy / massRatio
-
-               el.data.mass += alt.data.mass
-
-               el.attributes['r'].nodeValue = el.data.mass
+               mergeElements(el, alt)
+               // update text
+               text.innerHTML = circles.length
 
                s.add(alt)
-               removeCircle(alt)
 
             } else {
                el.data.vx += vx
                el.data.vy += vy
             }
          }
-
-         /*
-         if (offScreen(Number(x), Number(y))) {
-            removeCircle(el)
-         }
-         */
-
       }
-      // do this after working out vel
-      for (const el of circles) {
 
-         let x = el.attributes['cx'].nodeValue
-         let y = el.attributes['cy'].nodeValue
-
-         el.attributes['cx'].nodeValue = +x+el.data.vx
-         el.attributes['cy'].nodeValue = +y+el.data.vy
-      }
-      // update text
-      text.innerHTML = circles.length
+      updateElements(circles)
 
    }
 
    c.appendChild(svg)
 
    window.addEventListener('resize', debounce(setDimensions, 100, [svg]))
-   const id = setInterval(animate, 20)
+   const id = setInterval(animate, 25)
 
 }
 
