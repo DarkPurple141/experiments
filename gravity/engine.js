@@ -7,7 +7,7 @@ const DIMENSIONS = {
 }
 
 const config = {
-   NUM_CIRCLES : 20
+   NUM_CIRCLES : 10
 }
 
 const randomHex = () => randomInt(0,255).toString(16)
@@ -59,8 +59,8 @@ function makeCircleElement(x, y, vx, vy, m) {
    circle.setAttribute('fill', randomColor())
 
    circle.data = {
-      vx: vx || randomInt(-1,1),
-      vy: vy || randomInt(-1,1),
+      vx: vx || 0, //randomInt(-1,1),
+      vy: vy || 0, //randomInt(-1,1),
       mass,
    }
 
@@ -146,10 +146,10 @@ function init () {
          const p1 = { x: startx, y: starty }
          const p2 = { x, y }
 
-         const dist  = 0.5 * distance(p1, p2)
+         const dist  = 0.1 * distance(p1, p2)
          const angle = getAngle(p1, p2)
          const circle = makeCircleElement(
-            startx, starty, dist * Math.cos(angle) * 0.4, dist * Math.sin(angle) * 0.4
+            startx, starty, dist * Math.cos(angle), dist * Math.sin(angle)
          )
          parent.appendChild(circle)
          circles.push(circle)
@@ -218,7 +218,7 @@ function init () {
                { point: p2, mass: alt.data.mass }
             )
 
-            if (distance(p1, p2) < el.data.mass) {
+            if (distance(p1, p2) < (el.data.mass + alt.data.mass)) {
                // merge elements
                mergeElements(el, alt)
                // update text
