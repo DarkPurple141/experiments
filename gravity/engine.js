@@ -189,8 +189,8 @@ function init () {
    function mergeElements(el, alt) {
       const massRatio = (el.data.mass / alt.data.mass)
 
-      el.data.vx = 0.5 * el.data.vx + alt.data.vx / massRatio
-      el.data.vy = 0.5 * el.data.vy + alt.data.vy / massRatio
+      el.data.vx = 0.5 * (el.data.vx + alt.data.vx / massRatio)
+      el.data.vy = 0.5 * (el.data.vy + alt.data.vy / massRatio)
 
       el.data.mass += alt.data.mass
 
