@@ -106,7 +106,7 @@ function swipe(ev, ui) {
 
       const x_difference = e.x - x
 
-      if (Math.abs(x_difference) < 10) {
+      if (Math.abs(x_difference) < 20) {
          return
       }
 
@@ -128,6 +128,9 @@ function init() {
    window.addEventListener('keydown', (e) => left(e, ui.prev.bind(ui)))
    window.addEventListener('mousedown', (e) => swipe(unify(e), ui))
    window.addEventListener('touchstart', (e) => swipe(unify(e), ui))
+   window.addEventListener('resize', () => {
+      parent.style.height = window.innerHeight
+   })
 
    document.removeEventListener('DOMContentLoaded', init)
 }
