@@ -10,7 +10,7 @@ h1 {
    font-size: 4rem;
 }
 
-main {
+#slides {
    max-width: 100%;
    overflow: hidden;
    position: relative;
@@ -19,9 +19,18 @@ main {
    background-color: #213;
 }
 
+.slide-num {
+   margin: 20px;
+   position: absolute;
+   right: 0;
+   top: 0;
+   z-index: 1;
+}
+
 .slide {
    left: 0;
    right: 0;
+   touch-action: none;
    position: absolute;
    align-items: center;
    justify-content: center;

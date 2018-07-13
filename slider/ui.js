@@ -46,6 +46,7 @@ function slideFactory(parent, num) {
          current.classList.remove('left')
 
          index++
+         this.updateIndex()
       },
       prev() {
          if (this.checkIndex(-1))
@@ -58,9 +59,13 @@ function slideFactory(parent, num) {
          current.classList.remove('right')
 
          index--
+         this.updateIndex()
       },
       checkIndex(incr) {
          return (index + incr > MAX || index + incr < 0)
+      },
+      updateIndex() {
+         parent.children[0].innerHTML = `${index + 1}/${MAX + 1}`
       }
    }
 }
