@@ -129,8 +129,10 @@ function init() {
    window.addEventListener('mousedown', (e) => swipe(unify(e), ui))
    window.addEventListener('touchstart', (e) => swipe(unify(e), ui))
    window.addEventListener('resize', () => {
-      parent.style.height = window.innerHeight
+      parent.style.height = window.innerHeight + "px"
    })
+
+   parent.style.height = window.innerHeight + "px"
 
    document.removeEventListener('DOMContentLoaded', init)
 }
