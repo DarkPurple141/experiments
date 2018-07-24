@@ -1,0 +1,44 @@
+* {
+   margin: 5px 0px;
+}
+
+html, body {
+   margin: 0;
+   padding: 0;
+}
+
+body {
+   font-size: 12px;
+   font-kerning: normal;
+   font-family: 'Open Sans', sans-serif;
+}
+
+section {
+   min-height: 40vh;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   padding: 120px 0px;
+}
+
+section:nth-child(even) {
+   background-color: #f6f6f6;
+}
+
+section:first-child {
+   font-size: 2em;
+   color: #fefefe;
+   height: 60vh;
+   background-color: #211212;
+}
+
+section:first-child p {
+   padding: 10px;
+   background-color: #5566ff;
+}
+
+section > h1 {
+   text-transform: uppercase;
+   font-size: 4.5rem;
+}
