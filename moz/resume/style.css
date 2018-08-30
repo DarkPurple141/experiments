@@ -54,11 +54,11 @@ main {
 }
 
 .container {
-   padding: 22.5px 30px;
+   padding: 20px 30px;
 }
 
 .column {
-   width: 63%;
+   width: 65%;
 }
 
 .left-column {
@@ -69,7 +69,7 @@ main {
 
 .column:first-of-type {
    background-color: #eaeafa;/*#d99;*/
-   width: 37%;
+   width: 35%;
 }
 
 header {
