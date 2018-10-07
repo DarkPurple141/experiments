@@ -1,0 +1,332 @@
+<html>
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>More on the DOM</title>
+
+  <link rel="stylesheet" href="../css/reveal.css">
+  <link rel="stylesheet" href="../css/theme/canva.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="../lib/css/zenburn.css">
+
+  <link rel="stylesheet" href="../lib/fontawesome/css/all.min.css">
+
+  <!-- Printing and PDF exports -->
+  <script data-cfasync="false">
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? '../css/print/pdf.css' : '../css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-background="linear-gradient(90deg,blue,#7d2ae8)" data-background-size="cover">
+        <div class="has-dark-background">
+          <h2>More DOM</h2>
+          <p style="font-size: 0.6em">Alex Hinds | <i class="fab fa-github"></i> @darkpurple141 | <i class="fab fa-twitter"></i>
+            @al_hinds</p>
+        </div>
+      </section>
+      <section>
+        <section>
+          <h2>Overview</h2>
+          <ul>
+            <li><code>window</code> based storage</li>
+            <li>Leaning on CSS animation</li>
+            <li>DOM Performance and Page Load</li>
+          </ul>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            Nick went over more of the DOM nuts and bolts. I'm going to introduce
+            a couple of useful additional concepts and tools.
+          </textarea>
+          </aside>
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          ## Client Side Storage
+        </section>
+        <section>
+          <h3>Background</h3>
+
+          <ul>
+            <li>Modern concept</li>
+            <li>Not Cookies!</li>
+            <li>Cookies are used by the server to identify a client</li>
+            <li>Storage is used by the client application for use in frontend</li>
+          </ul>
+
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+                Client-side data storage is a fairly new concept, reliant
+                on browsers supporting saving data inside the browser. A complement,
+                not replacement for cookies.
+            </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            ### Storage API
+
+            * Available in the `window` object in most browsers
+            * String based only (no complex data structures)
+            * Browser specific! Be wary. What if user is on different devices?
+
+            Notes: 
+            Remember this is 
+          </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            ### Storage API
+
+            ```js
+            // Local Storage extends the more generic Storage API
+            window.Storage
+
+            // refreshes once a user closes a tab
+            window.sessionStorage
+
+            // refreshes only after an explicit clear
+            window.localStorage
+            ```
+
+            Notes: 
+            Different types of storage. Mostly
+            localStorage and sessionStorage is what we want.
+          </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            ### Local Storage API           
+            ```js
+            // Get a key value
+            localStorage.setItem('key', 'value')
+            
+            // Get a key value
+            localStorage.getItem('key')
+            
+            // clear storage
+            localStorage.clear()
+            ```
+            Notes: 
+            DEMO
+          </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            ### Getting Round String Restrictions           
+            ```js
+            
+            // Turn a JavaScript obj to a valid JSON string
+            JSON.stringify({ 'key': [10, 12, 13] })
+            
+            // Turn a valid string
+            JSON.parse('{ "key": "ashdjkashdk" }'')
+            ```
+            Notes: 
+            DEMO
+          </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            ### Further Reading
+            
+            <a class="footnote" target="_blank"
+           href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">
+          https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage</a>
+          <a class="footnote" target="_blank"
+           href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">
+           https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage</a>
+           <a class="footnote" target="_blank"
+           href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">
+          https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API</a>
+          </textarea>
+          </aside>
+        </section>
+      </section>
+      <section>
+        <section>
+          <div style="width: 250px; height: 250px; margin: auto;">
+            <img class="plain" src="images/css.svg">
+          </div>
+          <h2>CSS Animations</h2>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            We can lean on CSS to simple animations with JavaScript.
+            Rather than directly moving, animating things with JS, we can
+            use the inbuilt animations in CSS.
+          </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+            <aside class="notes" data-markdown>
+              <textarea data-template>
+              ### Super Basics
+              
+              * Use CSS class toggling to manage animation
+              * Then use CSS transition property to enable animation
+              * Disclaimer: some properties don't animate
+            </textarea>
+            </aside>
+        </section>
+        <section data-markdown>
+            <aside class="notes" data-markdown>
+              <textarea data-template>
+              ### Example CSS
+              
+              ```html
+              <style>
+                .thing {
+                  transition: opacity 0.3s ease;
+                  opacity: 1;
+                }
+                
+                .clear {
+                  opacity: 0;
+                }
+              </style>
+
+              ```
+            </textarea>
+            </aside>
+        </section>
+        <section>
+            <aside data-markdown>
+              <textarea data-template>
+              ### Example Basics
+              
+              ```html
+              <html>
+                <div class="thing">Thing</div>
+              </html>
+              <script>
+                function disappear() {
+                  const thing = document.getElementsByClassName('thing')[0]
+                  thing.classList.toggle('clear')
+                } 
+              </script>
+              ```
+            </textarea>
+            </aside>
+            <style>
+                .thing {
+                  transition: opacity 0.3s ease-in-out;
+                  opacity: 1;
+                }
+                
+                .clear {
+                  opacity: 0;
+                }
+            </style>
+            <div class="thing">Now you see me!</div>
+            <button onclick="disappear()">Click to Disappear</button>
+            <script>
+                function disappear() {
+                  const thing = document.getElementsByClassName('thing')[0]
+                  thing.classList.toggle('clear')
+                } 
+            </script>
+        </section>
+        <section>
+          <h3>Further reading</h3>
+          <div><img class="plain" height="60%" src="images/transition.png"></div>
+          <a class="footnote" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition">
+            https://developer.mozilla.org/en-US/docs/Web/CSS/transition</a>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+              Powerful and fun.
+          </textarea>
+          </aside>
+        </section>
+      </section>
+      
+      <section>
+        <section data-background="linear-gradient(90deg,#00c4cc,#7d2ae8)" data-background-size="cover">
+          <div class="has-dark-background">
+              <h2>Performance Basics</h2>
+          </div>
+        </section>
+        <section data-markdown>
+            ## Common Errors
+            * Loading Assets/Scripts that aren't immediately needed
+            * Too many Event Listeners/Listening to events too often
+        </section>
+        <section data-markdown>
+          ## DOM Loading Example
+        </section>
+        <section data-markdown>
+          ## Too Many/Eager Listeners
+
+          * Some events are meaningless to listen to too often
+          * Consider window resize event (expensive)
+          * Consider scrolldown functionality to get more results from an API (meaningless)
+
+          Notes:
+            Underline no need to worry about 
+        </section>
+
+        <section>
+            <h3>Further reading</h3>
+            <div><img class="plain" height="60%" src="images/lighthouse.png"></div>
+            <a class="footnote" target="_blank" href="https://developers.google.com/web/tools/lighthouse/">
+              https://developers.google.com/web/tools/lighthouse/</a>
+            <aside class="notes" data-markdown>
+              <textarea data-template>
+                Powerful and fun.
+            </textarea>
+            </aside>
+          </section>
+      </section>
+      <section>
+        <h2>Thanks!</h2>
+      </section>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="../lib/js/head.min.js"></script>
+  <script data-cfasync="false" src="../js/reveal.js"></script>
+
+  <script data-cfasync="false">
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+      history: true,
+      center: true,
+
+      dependencies: [
+        { src: '../plugin/markdown/marked.js' },
+        { src: '../plugin/external/external.js' },
+        { src: '../plugin/markdown/markdown.js' },
+        { src: '../plugin/notes/notes.js', async: true },
+        { src: '../plugin/sampler/sampler.js' },
+        {
+          src: '../plugin/highlight/highlight.js', async: true, callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
+        }
+      ]
+    });
+  </script>
+</body>
+
+</html>
