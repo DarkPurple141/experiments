@@ -1,0 +1,291 @@
+<html>
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Putting it all together</title>
+
+  <link rel="stylesheet" href="../css/reveal.css">
+  <link rel="stylesheet" href="../css/theme/canva.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="../lib/css/zenburn.css">
+
+  <link rel="stylesheet" href="../lib/fontawesome/css/all.min.css">
+
+  <!-- Printing and PDF exports -->
+  <script data-cfasync="false">
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? '../css/print/pdf.css' : '../css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-background="linear-gradient(90deg,blue,#7d2ae8)" data-background-size="cover">
+        <div class="has-dark-background">
+          <h2>Putting it all together</h2>
+          <p style="font-size: 0.6em">Alex Hinds | <i class="fab fa-github"></i> @darkpurple141 | <i class="fab fa-twitter"></i>
+            @al_hinds</p>
+        </div>
+      </section>
+      <section>
+        <section>
+          <h2>Overview</h2>
+          <ul>
+            <li>The assignment</li>
+            <li>The backend</li>
+            <li>The frontend</li>
+            <li>Strategy to tackle the task</li>
+          </ul>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            Nick went over more of the DOM nuts and bolts. I'm going to introduce
+            a couple of useful additional concepts and tools.
+          </textarea>
+          </aside>
+        </section>
+      </section>
+      <section>
+        <section data-background="linear-gradient(90deg,#00c4cc,#7d2ae8)" data-background-size="cover">
+          <h2 class="has-dark-background">The Assignment</h2>
+        </section>
+        <section>
+          <h3>Instacram</h3>
+
+          <ul>
+            <li>Close to a real-world Frontend experience</li>
+            <li>Idea is to build a Single Page App (SPA)</li>
+            <li>Repository and some code provided</li>
+            <li>There are milestones but mostly it's very open. Go nuts.</li>
+          </ul>
+
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+                Client-side data storage is a fairly new concept, reliant
+                on browsers supporting saving data inside the browser. A complement,
+                not replacement for cookies.
+            </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            ### What's provided
+
+            * A basic example application in `/frontend`
+            * An API development server in `/backend`
+            * Some helper code in the frontend
+
+            Notes: 
+            Remember this is 
+          </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            ### RTFM!
+
+            * There are lots of docs provided
+            * Please read the spec, and supplied material first
+
+            Notes:
+            Different types of storage. Mostly
+            localStorage and sessionStorage is what we want.
+          </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            ### Do's and Don'ts        
+            
+            * Don't use a JavScript framework!
+            * Vanilla JS only
+            * Happy for you to lean on CSS libraries
+
+            Notes: 
+            DEMO
+          </textarea>
+          </aside>
+        </section>
+        <section data-markdown>
+          <aside class="notes" data-markdown>
+            <textarea data-template>
+            ### Getting Started    
+                        
+            ```bash
+            # Clone the Repo
+            git clone
+
+            # Directory Structure
+            - backend
+              - run.py
+              - other...
+              - README.md
+            - frontend
+              - index.html
+              - other...
+              - README.md
+            - README.md
+            ```
+
+            Notes: 
+            DEMO
+          </textarea>
+          </aside>
+        </section>
+      </section>
+      <section>
+        <section>
+          <div style="width: 250px; height: 250px; margin: auto;">
+            <img class="plain" src="images/js.png">
+          </div>
+          <h2>The Frontend</h2>
+        </section>
+        <section data-markdown>
+          ### Directory Structure
+
+          ```bash
+          - frontend
+          - data/
+          - images/
+          - src/
+          - styles/
+          - tests/
+          - index.html
+          - package.json
+          ```
+        </section>
+        <section data-markdown>
+          ### Example Code
+
+          * In `/src` you'll see an example app structure.
+          * You can reuse as much of this code as you want.
+
+          ```js
+          // eg. Deals with uploading a local image
+          function postImage(event) {
+          const [ file ] = event.target.files;
+
+          const validFileTypes = [ 'image/jpeg', 'image/png', 'image/jpg' ]
+          const valid = validFileTypes.find(type => type === file.type);
+          }
+          ```
+        </section>
+        <section data-markdown>
+          ### Running Your App
+          * Spin up the frontend server `npm start`
+          * Go to `localhost:8080`
+        </section>
+        <section>
+          <h2>You should see this:</h2>
+          <iframe style="width: 80%; height: 50%;" src="http://localhost:8080"></iframe>
+        </section>
+        <section data-markdown>
+          ### Tips
+          * To start develop using the static data in frontend
+          * Transition slowly to the backend development server
+        </section>
+      </section>
+      <section>
+        <section data-background="linear-gradient(90deg,#00c4cc,#7d2ae8)" data-background-size="cover">
+          <div class="has-dark-background">
+            <h2>Backend</h2>
+          </div>
+        </section>
+        <section data-markdown>
+          ### Directory Structure
+          ```bash
+          - backend
+          - run.py
+          - app.py
+          - README.md
+          ```
+        </section>
+        <section data-markdown>
+          ### Getting Started
+
+          ```bash
+          cd backend
+          # create a sandbox for the backend
+          virtualenv -p /usr/local/bin/python3 env
+          # enter sandbox
+          source env/bin/activate
+          # set up sandbox
+          pip install -r requirements.txt
+          # run backend! Will run on port 5000.
+          # go to http://127.0.0.1:5000/ to see the docs!
+          python run.py
+          ```
+        </section>
+        <section>
+          <div style="width: 250px; height: 250px; margin: auto;">
+            <img class="plain" src="images/swagger.png">
+          </div>
+          <h3>API Docs</h3>
+        </section>
+
+        <section data-markdown>
+          ## Understand the endpoints
+        </section>
+
+        <section data-markdown>
+          ## Backend is a blackbox
+        </section>
+      </section>
+      <section>
+        <section data-markdown>
+          ## Strategy for doing Assignment
+        </section>
+        <section data-markdown>
+            ### Approach
+            1. Get something basic working with the data provided in `/frontend/data`
+            2. Once you've got something basic working, start hitting the `/dummy/` API, which doesn't require authentication. See docs.
+            3. Finally, once you've got that working, transition over to use the real API.
+        </section>
+      </section>
+      <section data-background="linear-gradient(90deg,blue,#7d2ae8)" data-background-size="cover">
+        <div class="has-dark-background">
+          <h2>The end</h2>
+          <p style="font-size: 0.6em">Big thanks to Andrew for allowing us to get this going - and Zain Afzal for driving this thing forward. Good luck for the assignment. Thanks.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="../lib/js/head.min.js"></script>
+  <script data-cfasync="false" src="../js/reveal.js"></script>
+
+  <script data-cfasync="false">
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+      history: true,
+      center: true,
+
+      dependencies: [
+        { src: '../plugin/markdown/marked.js' },
+        { src: '../plugin/external/external.js' },
+        { src: '../plugin/markdown/markdown.js' },
+        { src: '../plugin/notes/notes.js', async: true },
+        { src: '../plugin/sampler/sampler.js' },
+        {
+          src: '../plugin/highlight/highlight.js', async: true, callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
+        }
+      ]
+    });
+  </script>
+</body>
+
+</html>
