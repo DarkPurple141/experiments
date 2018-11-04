@@ -1,0 +1,12 @@
+main {
+    width: 600px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+img {
+    margin: 10px auto;
+    width: 400px;
+    height: 400px;
+}

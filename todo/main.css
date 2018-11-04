@@ -1,0 +1,11 @@
+ul {
+    width: 50%;
+}
+
+li {
+    padding: 5px;
+}
+
+.hide {
+    display: none;
+}
