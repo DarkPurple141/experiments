@@ -1,5 +1,4 @@
-
-// import geom as g from './geom.js'
+import {getGravity, getDistance, getAngle} from './geom.js';
 
 const DIMENSIONS = {
    width: 300,
@@ -13,7 +12,7 @@ const config = {
 const randomHex = () => randomInt(0,255).toString(16)
 const randomInt = (min, max) => Math.floor(Math.random()*(max-min) + min)
 const randomColor = () => '#'+[0,1,2].map(randomHex).join('')
-const offScreen = (x, y) =>
+const isOffScreen = (x, y) =>
    (x < 0 || y < 0 || x > DIMENSIONS.width || y > DIMENSIONS.height)
 
 
@@ -146,7 +145,7 @@ function init () {
          const p1 = { x: startx, y: starty }
          const p2 = { x, y }
 
-         const dist  = 0.1 * distance(p1, p2)
+         const dist  = 0.1 * getDistance(p1, p2)
          const angle = getAngle(p1, p2)
          const circle = makeCircleElement(
             startx, starty, dist * Math.cos(angle), dist * Math.sin(angle)
@@ -218,7 +217,7 @@ function init () {
                { point: p2, mass: alt.data.mass }
             )
 
-            if (distance(p1, p2) < (el.data.mass + alt.data.mass)) {
+            if (getDistance(p1, p2) < (el.data.mass + alt.data.mass)) {
                // merge elements
                mergeElements(el, alt)
                // update text
@@ -235,12 +234,16 @@ function init () {
 
       updateElements(circles)
 
+      requestAnimationFrame(animate);
+
    }
 
    c.appendChild(svg)
 
    window.addEventListener('resize', debounce(setDimensions, 100, [svg]))
-   const id = setInterval(animate, 25)
+
+   requestAnimationFrame(animate)
+   //const id = setInterval(animate, 25)
 
 }
 
