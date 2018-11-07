@@ -15,9 +15,8 @@ function createElement(vnode) {
   }
 
   const $el = document.createElement(vnode.node.toLowerCase())
-  for (let child of vnode.children) {
-      $el.appendChild(createElement(child))
-  }
+  $el.append(...vnode.children.map(createElement))
+
   return $el
 }
 
@@ -46,7 +45,6 @@ function updateDOM($parent, node, vnode) {
       $parent.removeChild(node)
    // else nodes aren't equal
    } else if (!equals(node, vnode)) {
-      console.log(node, vnode)
       $parent.replaceChild(createElement(vnode), node)
    // else nodes are equal
    } else {
