@@ -1,5 +1,5 @@
 @page {
-   size: 210mm 297mm;
+   size: 210mm 317mm;
    margin: 27mm 16mm 27mm 16mm;
 }
 
@@ -19,7 +19,7 @@ body {
    padding: 0;
    position: relative;
    background-color: white;
-   height: 297mm;
+   height: 317mm;
    width: 210mm;
 }
 
@@ -58,7 +58,7 @@ main {
 }
 
 .column {
-   width: 65%;
+   width: 66%;
 }
 
 .left-column {
@@ -69,7 +69,7 @@ main {
 
 .column:first-of-type {
    background-color: #eaeafa;/*#d99;*/
-   width: 35%;
+   width: 34%;
 }
 
 header {
