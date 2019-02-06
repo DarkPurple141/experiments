@@ -1,0 +1,55 @@
+main {
+    padding: 20px 0;
+    margin: auto;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.created {
+    animation: slidein 0.6s;
+}
+
+.loaded {
+    visibility: visible;
+    animation: fadein 2s;
+}
+
+img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    visibility: hidden;
+}
+
+.block {
+    position: relative;
+    background-color: #f1f1f1;
+    margin: 20px 0;
+    height: 400px;
+    width: 400px;
+}
+
+.block:hover {
+    opacity: 0.8;
+}
+
+@keyframes slidein {
+    from {
+        transform: translateY(-30px);
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
