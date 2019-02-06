@@ -19,7 +19,7 @@ const main = document.querySelector('main')
 
 window.addEventListener('scroll', debounce(
     () => {
-        if (window.scrollY + 400 > window.innerHeight) {
+        if (window.scrollY + window.innerHeight > document.body.scrollHeight) {
             main.appendChild(createBlock())
         }
 }, 100))
