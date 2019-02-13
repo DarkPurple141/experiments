@@ -1,4 +1,4 @@
-import generateRandomLevel from './setup';
+import generateRandomLevel from './setup.js';
 
 function init() {
     generateRandomLevel();
