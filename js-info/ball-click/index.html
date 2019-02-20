@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ball animation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #app {
+            width: 500px;
+            height: 500px;
+            background-color: paleturquoise;
+            border: 1px solid black;
+            margin: 20px auto;
+        }
+
+        #ball {
+            transition: transform 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <img id="ball" src="ball.svg"/>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
