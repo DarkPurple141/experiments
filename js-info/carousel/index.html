@@ -7,12 +7,20 @@
     <title>carousel</title>
     <style>
     #carousel {
+        position: relative;
         width: 600px;
         height: 250px;
         border: 1px solid grey;
         margin: 20vh auto;
         background-color: #eee;
         overflow-x: scroll;
+    }
+
+    .carousel__button {
+        z-index: 10;
+        position: sticky;
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .item {
@@ -23,12 +31,11 @@
     }
 
     ul {
-        padding: 25px;
-        margin: auto;
+        margin: 0;
+        padding: 5px;
         width: 2000px;
         transition: transform 0.3s ease;
     }
-    
     </style>
 </head>
 <body>

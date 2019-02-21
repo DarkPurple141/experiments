@@ -40,9 +40,10 @@ class Todo {
     }
 
     discard() {
+        console.info('discard')
         if (this.selected) {
-            this.discardButton.classList.add('hide');
             this.selected.textContent = this.previous
+            this.removeEditable()
         }
     }
 
@@ -60,43 +61,43 @@ class Todo {
         this._elem = parent.insertBefore(root, ref);
     }
 
+    removeEditable() {
+        this.selected.removeAttribute('contenteditable');
+    }
+
     unClick({ target }) {
-        if (!target.dataset.item)
-            return;
+        if (!target.hasAttribute('data-item'))
+            return
 
         if (this.selected) {
-            if (this.selected.isEqualNode(target))
-                return;
-
-            this.selected.classList.remove('selected');
-            this.selected.setAttribute('contenteditable', false);
+            this.removeEditable()
         }   
     }
 
     onClick({ target }) {
-        if (!target.dataset.item) {
+        if (!target.hasAttribute('data-item')) {
             return;
         }
-            
 
         if (this.selected && this.selected.isEqualNode(target))
             return;
+        else
+            this.previous = this.selected.textContent;
         
         this.selected = target;
-        this.previous = this.selected.textContent;
+        
         this.selected.setAttribute('contenteditable', true);
         this.discardButton.classList.remove('hide');
-
-        target.classList.add('selected');
     }
 
-    buttonClick({ target }) {
-
+    buttonClick({ target }) {   
         const {action} = target.dataset;
         if (!action)
             return;
         
         this[action](target);
+
+        this.selected = null
     }
 
 }

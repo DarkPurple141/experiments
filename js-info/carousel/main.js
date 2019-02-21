@@ -5,14 +5,13 @@ const colors = ['red', 'blue', 'green', 'purple', 'black']
     
 $ul.append(
         ...[1, 2, 3, 4, 5].map(
-            (val) => {
-                const $el = document.createElement('li')
-                $el.className = 'item'
-                $el.textContent = val
-                $el.style.backgroundColor = colors[val - 1]
-
-                return $el
-        })
+            (val) => Object.assign(document.createElement('li'), {
+                    className: 'item',
+                    textContent: val,
+                    style: {
+                        backgroundColor: colors[val - 1]
+                    }})
+        )
 )
 
 carousel.append(
