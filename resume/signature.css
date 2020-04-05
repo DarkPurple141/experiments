@@ -1,0 +1,51 @@
+body {
+  box-sizing: border-box;
+  min-width: 400px;
+  max-width: 400px;
+}
+
+a {
+  color: #eaeafa;
+}
+
+.signature {
+  color: #012;
+  font-size: 12px;
+}
+
+header {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: inherit;
+  line-height: initial;
+  border: none;
+  margin: 0;
+}
+
+header h1 {
+  font-size: 1.5em;
+}
+
+.header-copy {
+  display: block;
+}
+
+.header-copy > * {
+  margin: 0;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+}
+
+footer {
+  box-sizing: border-box;
+  width: 100%;
+  display: block;
+  background-color: #012;
+}
+
+.footer-link {
+  line-height: 2;
+}
