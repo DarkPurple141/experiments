@@ -1,10 +1,9 @@
 const routes = {
   '#/': '<h1>Home Page</h1>',
-  '#/login': '<h1>Login Page</h1>'
+  '#/login': '<h1>Login Page</h1>',
 };
 
 const root = document.getElementById('root');
-
 
 function router(oldPath, newPath) {
   if (oldPath === newPath) {
@@ -42,20 +41,17 @@ function onHashChange({ oldURL, newURL }) {
 
 function runApp() {
   window.addEventListener('hashchange', onHashChange);
-  const homeLink  = createLink('Home', '#/');
+  const homeLink = createLink('Home', '#/');
   const loginLink = createLink('Login', '#/login');
 
   const links = document.createElement('div');
   links.append(homeLink, ' | ', loginLink);
 
-  document.body.appendChild(links)
+  document.body.appendChild(links);
 
-  if (!location.hash)
-    location.hash = '#/';
+  if (!location.hash) location.hash = '#/';
 
   router(null, location.hash);
 }
 
-export { 
-  runApp
-};
+export { runApp };
